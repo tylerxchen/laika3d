@@ -6,7 +6,7 @@ using namespace tc3d::rendering;
 
 Window::Window() {
   glewExperimental = true;
-  if (!glfwInit()) {
+  if (glfwInit() == GLFW_FALSE) {
     throw std::runtime_error("Failed to initialize GLFW");
   }
 

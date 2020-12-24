@@ -1,4 +1,4 @@
-add_library(rendering shaderutils.cpp renderer.cpp vertexbuffer.cpp indexbuffer.cpp window.cpp)
+add_library(rendering shader.cpp renderer.cpp vertexbuffer.cpp indexbuffer.cpp window.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)

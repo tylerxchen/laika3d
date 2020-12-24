@@ -3,6 +3,7 @@
 #include "rendering/vertexbuffer.hpp"
 #include "rendering/indexbuffer.hpp"
 #include "rendering/window.hpp"
+#include "rendering/shader.hpp"
 
 using namespace tc3d;
 
@@ -25,6 +26,8 @@ int main() {
   auto draw_cb = [=]() {
     ren.draw(vbuf, ibuf);
   };
+
+  win.set_callback(draw_cb);
 
   win.loop();
 
