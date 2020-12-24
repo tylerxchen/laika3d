@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <exception>
 
 using namespace tc3d::rendering;
 
