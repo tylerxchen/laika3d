@@ -63,19 +63,26 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
     glGetShaderInfoLog(fshader_id, log_len, nullptr, error_msg.data());
     throw std::runtime_error(error_msg.data());
   }
+
+  prog_id = glCreateProgram();
+  glAttachShader(prog_id, vshader_id);
+  glAttachShader(prog_id, fshader_id);
+  glLinkProgram(prog_id);
+
+  glDetachShader(prog_id, vshader_id);
+  glDetachShader(prog_id, fshader_id);
+  glDeleteShader(vshader_id);
+  glDeleteShader(fshader_id);
 }
 
-void Shader::attach(unsigned int program_id) {
-  glAttachShader(program_id, vshader_id);
-  glAttachShader(program_id, fshader_id);
+void Shader::bind() const {
+  glUseProgram(prog_id);
 }
 
-void Shader::detach(unsigned int program_id) {
-  glDetachShader(program_id, vshader_id);
-  glDetachShader(program_id, fshader_id);
+void Shader::unbind() const {
+  glUseProgram(0);
 }
 
 Shader::~Shader() {
-  glDeleteShader(vshader_id);
-  glDeleteShader(fshader_id);
+  glDeleteProgram(prog_id);
 }

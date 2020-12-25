@@ -11,6 +11,8 @@ int main() {
   rendering::Window win;
   rendering::Renderer ren;
 
+  rendering::Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
+
   rendering::VertexBuffer vbuf = {{
     {-1.0f, -1.0f, 0.0f},
     {1.0f, -1.0f, 0.0f},
@@ -23,8 +25,8 @@ int main() {
     2,
   }};
 
-  auto draw_cb = [=]() {
-    ren.draw(vbuf, ibuf);
+  auto draw_cb = [&]() {
+    ren.draw(vbuf, ibuf, s);
   };
 
   win.set_callback(draw_cb);

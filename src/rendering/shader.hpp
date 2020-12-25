@@ -9,12 +9,15 @@ namespace tc3d {
         Shader(const std::string& vertex_path, const std::string& fragment_path);
         ~Shader();
 
-        void attach(unsigned int program_id);
-        void detach(unsigned int program_id);
+        unsigned int get_prog_id() const { return prog_id; }
+
+        void bind() const;
+        void unbind() const;
 
       private:
         unsigned int vshader_id;
         unsigned int fshader_id;
+        unsigned int prog_id;
     };
   }
 }
