@@ -20,7 +20,7 @@ int main() {
   rendering::IndexBuffer ibuf = {{
     0,
     1,
-    2
+    2,
   }};
 
   auto draw_cb = [=]() {
