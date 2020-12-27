@@ -1,16 +1,16 @@
 #include <iostream>
-#include "rendering/renderer.hpp"
-#include "rendering/vertexbuffer.hpp"
-#include "rendering/indexbuffer.hpp"
-#include "rendering/window.hpp"
-#include "rendering/shader.hpp"
+#include "tc3d/renderer.hpp"
+#include "tc3d/vertexbuffer.hpp"
+#include "tc3d/indexbuffer.hpp"
+#include "tc3d/window.hpp"
+#include "tc3d/shader.hpp"
 
 using namespace tc3d;
 
 int main() {
   rendering::Window win;
   rendering::Renderer ren;
-
+  
   rendering::Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
   rendering::VertexBuffer vbuf = {{

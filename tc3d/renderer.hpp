@@ -16,8 +16,6 @@ namespace tc3d {
       public:
         Renderer();
 
-        void use_program(unsigned int prog_id) const;
-
         void draw(const VertexBuffer& vbuf, const IndexBuffer& ibuff, const Shader& s) const;
 
       private:
