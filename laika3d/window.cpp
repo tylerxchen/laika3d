@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-using namespace tc3d::rendering;
+using namespace laika3d;
 
 Window::Window() {
   glewExperimental = true;
@@ -16,7 +16,7 @@ Window::Window() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  win = glfwCreateWindow(1024, 768, "tc3d", nullptr, nullptr);
+  win = glfwCreateWindow(1024, 768, "laika3d", nullptr, nullptr);
 
   if (win == nullptr) {
     glfwTerminate();

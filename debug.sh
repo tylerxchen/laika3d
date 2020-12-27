@@ -1,1 +1,1 @@
-gdb ./build/tc3d
+gdb ./build/laika3d

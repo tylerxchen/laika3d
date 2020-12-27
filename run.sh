@@ -1,2 +1,2 @@
 #! /bin/sh
-cd build ; ./tc3d_demo
+cd build ; ./laika3d_demo

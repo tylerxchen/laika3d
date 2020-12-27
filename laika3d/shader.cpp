@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 
-using namespace tc3d::rendering;
+using namespace laika3d;
 
 Shader::Shader(const std::string& vertex_path, const std::string& fragment_path) {
   vshader_id = glCreateShader(GL_VERTEX_SHADER);

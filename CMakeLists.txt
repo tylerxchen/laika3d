@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.19.1)
 
-project(tc3d)
+project(laika3d)
 
-add_executable(tc3d_demo demo.cpp)
+add_executable(laika3d_demo demo.cpp)
 
-add_subdirectory(tc3d)
-target_link_directories(tc3d_demo PRIVATE tc3d)
-target_include_directories(tc3d_demo PRIVATE tc3d)
+add_subdirectory(laika3d)
+target_link_directories(laika3d_demo PRIVATE laika3d)
+target_include_directories(laika3d_demo PRIVATE laika3d)
 
-target_link_libraries(tc3d_demo tc3d)
+target_link_libraries(laika3d_demo laika3d)

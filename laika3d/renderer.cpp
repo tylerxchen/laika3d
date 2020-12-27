@@ -3,14 +3,12 @@
 #include <stdexcept>
 #include <iostream>
 
-using namespace tc3d::rendering;
+using namespace laika3d;
 
-namespace tc3d {
-  namespace rendering {
-    void GLAPIENTRY message_callback(GLenum source, GLenum type, GLuint id, GLenum severity,
-                                     GLsizei length, const GLchar* message, const void* userParam) {
-      std::cout << "OpenGL message: " << message << std::endl;
-    }
+namespace laika3d {
+  void GLAPIENTRY message_callback(GLenum source, GLenum type, GLuint id, GLenum severity,
+                                    GLsizei length, const GLchar* message, const void* userParam) {
+    std::cout << "OpenGL message: " << message << std::endl;
   }
 }
 

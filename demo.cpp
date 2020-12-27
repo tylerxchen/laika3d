@@ -1,25 +1,25 @@
 #include <iostream>
-#include "tc3d/renderer.hpp"
-#include "tc3d/vertexbuffer.hpp"
-#include "tc3d/indexbuffer.hpp"
-#include "tc3d/window.hpp"
-#include "tc3d/shader.hpp"
+#include "laika3d/renderer.hpp"
+#include "laika3d/vertexbuffer.hpp"
+#include "laika3d/indexbuffer.hpp"
+#include "laika3d/window.hpp"
+#include "laika3d/shader.hpp"
 
-using namespace tc3d;
+using namespace laika3d;
 
 int main() {
-  rendering::Window win;
-  rendering::Renderer ren;
+  Window win;
+  Renderer ren;
   
-  rendering::Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
+  Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
-  rendering::VertexBuffer vbuf = {{
+  VertexBuffer vbuf = {{
     {-1.0f, -1.0f, 0.0f},
     {1.0f, -1.0f, 0.0f},
     {0.0f, 1.0f, 0.0f},
   }};
 
-  rendering::IndexBuffer ibuf = {{
+  IndexBuffer ibuf = {{
     0,
     1,
     2,

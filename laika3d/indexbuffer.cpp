@@ -1,7 +1,7 @@
 #include "indexbuffer.hpp"
 #include <GL/glew.h>
 
-using namespace tc3d::rendering;
+using namespace laika3d;
 
 IndexBuffer::IndexBuffer(const std::vector<unsigned int>& buf)
   : ibuf(buf) {
