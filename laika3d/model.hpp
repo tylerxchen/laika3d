@@ -29,6 +29,7 @@ namespace laika3d {
 
     private:
       void calc_model_mat();
+      void init_mats();
 
       glm::mat4 translation;
       glm::mat4 rotation;

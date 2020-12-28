@@ -11,16 +11,19 @@ namespace laika3d {
 
   class VertexBuffer {
     public:
+      VertexBuffer();
       VertexBuffer(const std::vector<Vertex>& buf);
       ~VertexBuffer();
 
       void bind() const;
       void unbind() const;
 
+      void append(const Vertex& v);
+
     private:
       void init_gl();
 
       unsigned int renderer_id;
-      const std::vector<Vertex> vbuf;
+      std::vector<Vertex> vbuf;
   };
 }

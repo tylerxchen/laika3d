@@ -3,18 +3,21 @@
 
 using namespace laika3d;
 
+IndexBuffer::IndexBuffer() {
+  init_gl();
+}
+
 IndexBuffer::IndexBuffer(const std::vector<unsigned int>& buf)
   : ibuf(buf) {
   init_gl();
 }
 
-IndexBuffer::IndexBuffer(std::vector<unsigned int>&& buf)
-  : ibuf(std::move(buf)) {
-  init_gl();
-}
-
 IndexBuffer::~IndexBuffer() {
   glDeleteBuffers(1, &renderer_id);
+}
+
+void IndexBuffer::append(unsigned int i) {
+  ibuf.push_back(i);
 }
 
 void IndexBuffer::bind() const {
