@@ -19,17 +19,19 @@ namespace laika3d {
       void rotate_z(float angle);
       void scale(float x, float y, float z);
 
+      std::size_t index_count() const { return ibuf.count(); }
+
       glm::mat4 mat();
 
-      void bind();
-      void unbind();
-
-      VertexBuffer vbuf;
-      IndexBuffer ibuf;
+      void bind() const;
+      void unbind() const;
 
     private:
       void calc_model_mat();
       void init_mats();
+
+      VertexBuffer vbuf;
+      IndexBuffer ibuf;
 
       glm::mat4 translation;
       glm::mat4 rotation;

@@ -6,6 +6,7 @@
 #include "vertexbuffer.hpp"
 #include "indexbuffer.hpp"
 #include "shader.hpp"
+#include "model.hpp"
 
 namespace laika3d {
   void GLAPIENTRY message_callback(GLenum source, GLenum type, GLuint id, GLenum severity,
@@ -15,7 +16,7 @@ namespace laika3d {
     public:
       Renderer();
 
-      void draw(const VertexBuffer& vbuf, const IndexBuffer& ibuff, const Shader& s) const;
+      void draw(const Model& m, const Shader& s) const;
 
     private:
       GLFWwindow* window;

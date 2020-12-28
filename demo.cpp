@@ -4,6 +4,7 @@
 #include "laika3d/indexbuffer.hpp"
 #include "laika3d/window.hpp"
 #include "laika3d/shader.hpp"
+#include "laika3d/model.hpp"
 
 using namespace laika3d;
 
@@ -13,20 +14,20 @@ int main() {
   
   Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
-  VertexBuffer vbuf = {{
+  Model m(
+  {{
     {-1.0f, -1.0f, 0.0f},
     {1.0f, -1.0f, 0.0f},
     {0.0f, 1.0f, 0.0f},
-  }};
-
-  IndexBuffer ibuf = {{
+  }},
+  {{
     0,
     1,
     2,
-  }};
+  }});
 
   auto draw_cb = [&]() {
-    ren.draw(vbuf, ibuf, s);
+    ren.draw(m, s);
   };
 
   win.set_callback(draw_cb);

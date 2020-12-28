@@ -19,10 +19,9 @@ Renderer::Renderer() {
   glBindVertexArray(vao_id);
 }
 
-void Renderer::draw(const VertexBuffer& vbuf, const IndexBuffer& ibuf, const Shader& s) const {
+void Renderer::draw(const Model& m, const Shader& s) const {
   glEnableVertexAttribArray(0);
-  vbuf.bind();
-  ibuf.bind();
+  m.bind();
   s.bind();
   glVertexAttribPointer(
     0,
@@ -34,7 +33,7 @@ void Renderer::draw(const VertexBuffer& vbuf, const IndexBuffer& ibuf, const Sha
   );
   glDrawElements(
     GL_TRIANGLES,
-    ibuf.count(),
+    m.index_count(),
     GL_UNSIGNED_INT,
     static_cast<void*>(0)
   );

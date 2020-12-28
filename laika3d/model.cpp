@@ -97,12 +97,12 @@ glm::mat4 Model::mat() {
   return model;
 }
 
-void Model::bind() {
+void Model::bind() const {
   vbuf.bind();
   ibuf.bind();
 }
 
-void Model::unbind() {
+void Model::unbind() const {
   vbuf.unbind();
   ibuf.unbind();
 }
