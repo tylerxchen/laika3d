@@ -12,8 +12,6 @@ namespace laika3d {
       void bind() const;
       void unbind() const;
       inline unsigned int count() const { return ibuf.size(); }
-
-      void append(unsigned int i);
       
     private:
       void init_gl();

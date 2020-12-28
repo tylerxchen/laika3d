@@ -1,1 +1,1 @@
-gdb ./build/laika3d
+gdb ./build/laika3d_demo

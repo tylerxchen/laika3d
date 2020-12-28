@@ -14,17 +14,7 @@ int main() {
   
   Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
-  Model m(
-  {{
-    {-1.0f, -1.0f, 0.0f},
-    {1.0f, -1.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f},
-  }},
-  {{
-    0,
-    1,
-    2,
-  }});
+  Model m("res/models/cube.obj");
 
   auto draw_cb = [&]() {
     ren.draw(m, s);

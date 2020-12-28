@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
+#include <memory>
 
 #include "vertexbuffer.hpp"
 #include "indexbuffer.hpp"
@@ -19,7 +20,7 @@ namespace laika3d {
       void rotate_z(float angle);
       void scale(float x, float y, float z);
 
-      std::size_t index_count() const { return ibuf.count(); }
+      std::size_t index_count() const { return ibuf->count(); }
 
       glm::mat4 mat();
 
@@ -30,8 +31,8 @@ namespace laika3d {
       void calc_model_mat();
       void init_mats();
 
-      VertexBuffer vbuf;
-      IndexBuffer ibuf;
+      std::unique_ptr<VertexBuffer> vbuf;
+      std::unique_ptr<IndexBuffer> ibuf;
 
       glm::mat4 translation;
       glm::mat4 rotation;

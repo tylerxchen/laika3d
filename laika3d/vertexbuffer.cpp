@@ -3,10 +3,6 @@
 
 using namespace laika3d;
 
-VertexBuffer::VertexBuffer() {
-  init_gl();
-}
-
 VertexBuffer::VertexBuffer(const std::vector<Vertex>& buf)
   : vbuf(buf) {
   init_gl();
@@ -14,10 +10,6 @@ VertexBuffer::VertexBuffer(const std::vector<Vertex>& buf)
 
 VertexBuffer::~VertexBuffer() {
   glDeleteBuffers(1, &renderer_id);
-}
-
-void VertexBuffer::append(const Vertex& v) {
-  vbuf.push_back(v);
 }
 
 void VertexBuffer::bind() const {

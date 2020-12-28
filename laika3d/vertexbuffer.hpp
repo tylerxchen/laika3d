@@ -18,8 +18,6 @@ namespace laika3d {
       void bind() const;
       void unbind() const;
 
-      void append(const Vertex& v);
-
     private:
       void init_gl();
 
