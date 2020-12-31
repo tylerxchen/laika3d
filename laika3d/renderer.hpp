@@ -22,9 +22,10 @@ namespace laika3d {
       void set_callback(const std::function<void()>& cb) { callback = cb; }
       void loop();
 
-      void draw(const Model& m, const Shader& s, const Camera& c) const;
+      void draw(const Model& m, const Shader& s, const Camera& c);
 
     private:
+      glm::mat4 mvp;
       GLFWwindow* win;
       std::function<void()> callback;
       unsigned int vao_id;

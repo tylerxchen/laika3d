@@ -78,7 +78,7 @@ Model::Model(const std::string& file_path)
       // group name
       // unhandled right now
     }
-    else if (!(start == "#" || start == "")) {
+    else if (!(start == "" || start[0] == '#')) {
       // if it's not a comment, then it's invalid
       throw std::runtime_error("Unknown beginning of line '" + start + "'");
     }

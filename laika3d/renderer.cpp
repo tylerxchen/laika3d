@@ -19,7 +19,7 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
   }
 
   glfwWindowHint(GLFW_SAMPLES, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
@@ -38,13 +38,16 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
   }
 
   glEnable(GL_DEBUG_OUTPUT);
+  glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
   glDebugMessageCallback(message_callback, nullptr);
+  glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
   glGenVertexArrays(1, &vao_id);
   glBindVertexArray(vao_id);
 }
 
 Renderer::~Renderer() {
   glfwDestroyWindow(win);
+  glfwTerminate();
 }
 
 void Renderer::loop() {
@@ -62,8 +65,8 @@ void Renderer::loop() {
            glfwWindowShouldClose(win) == 0);
 }
 
-void Renderer::draw(const Model& m, const Shader& s, const Camera& c) const {
-  glm::mat4 mvp = c.get_proj() * c.get_view() * m.get_model();
+void Renderer::draw(const Model& m, const Shader& s, const Camera& c) {
+  mvp = c.get_proj() * c.get_view() * m.get_model();
   glEnableVertexAttribArray(0);
   m.bind();
   s.bind();
