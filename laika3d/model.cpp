@@ -7,7 +7,8 @@
 
 using namespace laika3d;
 
-Model::Model(const std::string& file_path) {
+Model::Model(const std::string& file_path)
+  : translation(1.0f), rotation(1.0f), scaling(1.0f), model(1.0f) {
   // obj file parsing
   std::ifstream file;
   file.open(file_path);
@@ -84,52 +85,42 @@ Model::Model(const std::string& file_path) {
 
   vbuf = std::make_unique<VertexBuffer>(vertices);
   ibuf = std::make_unique<IndexBuffer>(indices);
-
-  init_mats();
 }
 
 Model::Model(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
-  : vbuf(std::make_unique<VertexBuffer>(vertices)), ibuf(std::make_unique<IndexBuffer>(indices)) {
-  init_mats();
-}
-
-void Model::init_mats() {
-  translation = glm::translate(glm::mat4(), glm::vec3());
-  rotation = glm::rotate(glm::mat4(), 0.0f, glm::vec3(0.0f, 0.0f, 0.0f));
-  scaling = glm::scale(glm::mat4(), glm::vec3(1.0f, 1.0f, 1.0f));
-  calc_model_mat();
-}
+  : vbuf(std::make_unique<VertexBuffer>(vertices)), ibuf(std::make_unique<IndexBuffer>(indices)),
+    translation(1.0f), rotation(1.0f), scaling(1.0f), model(1.0f) {}
 
 void Model::calc_model_mat() {
   model = translation * rotation * scaling;
 }
 
 void Model::translate(float x, float y, float z) {
-  translation = glm::translate(glm::mat4(), glm::vec3(x, y, z));
+  translation = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
   calc_model_mat();
 }
 
 void Model::rotate_x(float angle) {
-  rotation = glm::rotate(glm::mat4(), angle, glm::vec3(1.0f, 0.0f, 0.0f));
+  rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f, 0.0f, 0.0f));
   calc_model_mat();
 }
 
 void Model::rotate_y(float angle) {
-  rotation = glm::rotate(glm::mat4(), angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
   calc_model_mat();
 }
 
 void Model::rotate_z(float angle) {
-  rotation = glm::rotate(glm::mat4(), angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
   calc_model_mat();
 }
 
 void Model::scale(float x, float y, float z) {
-  scaling = glm::scale(glm::mat4(), glm::vec3(x, y, z));
+  scaling = glm::scale(glm::mat4(1.0f), glm::vec3(x, y, z));
   calc_model_mat();
 }
 
-glm::mat4 Model::mat() {
+glm::mat4 Model::mat() const {
   return model;
 }
 

@@ -9,11 +9,13 @@ namespace laika3d {
       ~Shader();
 
       unsigned int get_prog_id() const { return prog_id; }
+      unsigned int get_mvp_id() const { return mvp_uniform; }
 
       void bind() const;
       void unbind() const;
 
     private:
+      unsigned int mvp_uniform;
       unsigned int vshader_id;
       unsigned int fshader_id;
       unsigned int prog_id;

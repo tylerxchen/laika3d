@@ -73,6 +73,11 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
   glDetachShader(prog_id, fshader_id);
   glDeleteShader(vshader_id);
   glDeleteShader(fshader_id);
+
+  mvp_uniform = glGetUniformLocation(prog_id, "MVP");
+  if (mvp_uniform == -1) {
+    throw std::runtime_error("Shaders must have a mat4 uniform called 'MVP'");
+  }
 }
 
 void Shader::bind() const {

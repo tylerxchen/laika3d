@@ -22,7 +22,7 @@ namespace laika3d {
 
       std::size_t index_count() const { return ibuf->count(); }
 
-      glm::mat4 mat();
+      glm::mat4 mat() const;
 
       void bind() const;
       void unbind() const;

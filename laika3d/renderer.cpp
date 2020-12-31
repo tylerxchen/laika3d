@@ -12,8 +12,7 @@ namespace laika3d {
   }
 }
 
-Renderer::Renderer(float fov, unsigned int width, unsigned int height, float near, float far)
-  : cam(fov, static_cast<float>(width) / height, near, far) {
+Renderer::Renderer(unsigned int width, unsigned int height) {
   glewExperimental = true;
   if (glfwInit() == GLFW_FALSE) {
     throw std::runtime_error("Failed to initialize GLFW");
@@ -62,10 +61,14 @@ void Renderer::loop() {
            glfwWindowShouldClose(win) == 0);
 }
 
-void Renderer::draw(const Model& m, const Shader& s) const {
+void Renderer::draw(const Model& m, const Shader& s, const Camera& c) const {
+  glm::mat4 mvp = c.get_proj() * c.get_view() * m.mat();
   glEnableVertexAttribArray(0);
   m.bind();
   s.bind();
+
+  glUniformMatrix4fv(s.get_mvp_id(), 1, GL_FALSE, &mvp[0][0]);
+
   glVertexAttribPointer(
     0,
     3,
@@ -74,6 +77,7 @@ void Renderer::draw(const Model& m, const Shader& s) const {
     0,
     static_cast<void*>(0)
   );
+
   glDrawElements(
     GL_TRIANGLES,
     m.index_count(),
