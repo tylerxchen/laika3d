@@ -8,9 +8,13 @@ namespace laika3d {
     public:
       Camera(float fovy, float aspect, float near, float far);
 
-      void translate(float x, float y, float z);
-      void rotate_x(float angle);
-      void rotate_y(float angle);
+      void translate(float delta_x, float delta_y, float delta_z);
+      void rotate_x(float delta_angle);
+      void rotate_y(float delta_angle);
+
+      void set_translation(float x, float y, float z);
+      void set_rotation_x(float angle);
+      void set_rotation_y(float angle);
 
       glm::mat4 get_view() const { return view; }
       glm::mat4 get_proj() const { return projection; }

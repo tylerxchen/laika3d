@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <optional>
+#include <iostream>
 
 using namespace laika3d;
 
@@ -44,12 +45,12 @@ Model::Model(const std::string& file_path)
       std::string element;
       while (ss >> element) {
         std::size_t slash_pos = element.find('/');
-        unsigned int index;
-        if (slash_pos == std::string::npos) {
-          index = std::stof(element.substr(0, slash_pos));
+        unsigned long index;
+        if (slash_pos != std::string::npos) {
+          index = std::stoul(element.substr(0, slash_pos)) - 1;
         }
         else {
-          index = std::stof(element);
+          index = std::stoul(element) - 1;
         }
 
         polygon.push_back(index);
@@ -63,9 +64,9 @@ Model::Model(const std::string& file_path)
       unsigned int other = 2;
 
       while (other < polygon.size()) {
-        indices.push_back(origin - 1);
-        indices.push_back(polygon[other - 1] - 1);
-        indices.push_back(polygon[other] - 1);
+        indices.push_back(origin);
+        indices.push_back(polygon[other - 1]);
+        indices.push_back(polygon[other]);
         other++;
       }
     }
@@ -83,6 +84,16 @@ Model::Model(const std::string& file_path)
     }
   }
 
+  if (indices.size() % 3 != 0) {
+    throw std::runtime_error("Index buffer size must be a multiple of 3");
+  }
+
+  for (const auto& i : indices) {
+    if (i >= vertices.size()) {
+      throw std::runtime_error("Face references an out of bounds vertex");
+    }
+  }
+
   vbuf = std::make_unique<VertexBuffer>(vertices);
   ibuf = std::make_unique<IndexBuffer>(indices);
 }
@@ -95,33 +106,29 @@ void Model::calc_model_mat() {
   model = translation * rotation * scaling;
 }
 
-void Model::translate(float x, float y, float z) {
+void Model::set_translation(float x, float y, float z) {
   translation = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
   calc_model_mat();
 }
 
-void Model::rotate_x(float angle) {
+void Model::set_rotation_x(float angle) {
   rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f, 0.0f, 0.0f));
   calc_model_mat();
 }
 
-void Model::rotate_y(float angle) {
+void Model::set_rotation_y(float angle) {
   rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
   calc_model_mat();
 }
 
-void Model::rotate_z(float angle) {
+void Model::set_rotation_z(float angle) {
   rotation = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
   calc_model_mat();
 }
 
-void Model::scale(float x, float y, float z) {
+void Model::set_scale(float x, float y, float z) {
   scaling = glm::scale(glm::mat4(1.0f), glm::vec3(x, y, z));
   calc_model_mat();
-}
-
-glm::mat4 Model::mat() const {
-  return model;
 }
 
 void Model::bind() const {

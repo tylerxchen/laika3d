@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 using namespace laika3d;
 

@@ -14,15 +14,15 @@ namespace laika3d {
       Model(const std::string& filepath);
       Model(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
-      void translate(float x, float y, float z);
-      void rotate_x(float angle);
-      void rotate_y(float angle);
-      void rotate_z(float angle);
-      void scale(float x, float y, float z);
+      void set_translation(float x, float y, float z);
+      void set_rotation_x(float angle);
+      void set_rotation_y(float angle);
+      void set_rotation_z(float angle);
+      void set_scale(float x, float y, float z);
 
       std::size_t index_count() const { return ibuf->count(); }
 
-      glm::mat4 mat() const;
+      glm::mat4 get_model() const { return model; };
 
       void bind() const;
       void unbind() const;

@@ -22,6 +22,7 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   win = glfwCreateWindow(width, height, "laika3d", nullptr, nullptr);
@@ -62,11 +63,10 @@ void Renderer::loop() {
 }
 
 void Renderer::draw(const Model& m, const Shader& s, const Camera& c) const {
-  glm::mat4 mvp = c.get_proj() * c.get_view() * m.mat();
+  glm::mat4 mvp = c.get_proj() * c.get_view() * m.get_model();
   glEnableVertexAttribArray(0);
   m.bind();
   s.bind();
-
   glUniformMatrix4fv(s.get_mvp_id(), 1, GL_FALSE, &mvp[0][0]);
 
   glVertexAttribPointer(
@@ -84,5 +84,6 @@ void Renderer::draw(const Model& m, const Shader& s, const Camera& c) const {
     GL_UNSIGNED_INT,
     static_cast<void*>(0)
   );
+
   glDisableVertexAttribArray(0);
 }
