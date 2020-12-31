@@ -7,6 +7,12 @@ namespace laika3d {
     float x;
     float y;
     float z;
+    float norm_x;
+    float norm_y;
+    float norm_z;
+    float tex_x;
+    float tex_y;
+    float tex_z;
   };
 
   class VertexBuffer {

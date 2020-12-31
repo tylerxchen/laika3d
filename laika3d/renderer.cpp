@@ -55,6 +55,14 @@ void Renderer::loop() {
     return;
   }
 
+  while (!glfwWindowShouldClose(win)) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    callback();
+    glfwSwapBuffers(win);
+    glfwPollEvents();
+  }
+
+  /*
   glfwSetInputMode(win, GLFW_STICKY_KEYS, GL_TRUE);
   do {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -63,7 +71,9 @@ void Renderer::loop() {
     glfwPollEvents();
   } while (glfwGetKey(win, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
            glfwWindowShouldClose(win) == 0);
+  */
 }
+
 
 void Renderer::draw(const Model& m, const Shader& s, const Camera& c) {
   mvp = c.get_proj() * c.get_view() * m.get_model();
@@ -77,13 +87,13 @@ void Renderer::draw(const Model& m, const Shader& s, const Camera& c) {
     3,
     GL_FLOAT,
     GL_FALSE,
-    0,
+    sizeof(Vertex),
     static_cast<void*>(0)
   );
 
   glDrawElements(
     GL_TRIANGLES,
-    m.index_count(),
+    m.v_index_count(),
     GL_UNSIGNED_INT,
     static_cast<void*>(0)
   );

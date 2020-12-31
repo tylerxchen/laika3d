@@ -91,4 +91,5 @@ void Shader::unbind() const {
 
 Shader::~Shader() {
   glDeleteProgram(prog_id);
+  std::cout << glGetError() << std::endl;
 }

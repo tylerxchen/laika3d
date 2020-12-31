@@ -12,27 +12,27 @@ using namespace laika3d;
 int main(int argc, char* argv[]) {
   const unsigned int WIDTH = 1024;
   const unsigned int HEIGHT = 768;
+  
   Renderer ren(WIDTH, HEIGHT);
-  {
-    Camera c(glm::radians(45.0f), static_cast<float>(WIDTH) / HEIGHT, 0.1f, 100.0f);
+
+  Camera c(glm::radians(45.0f), static_cast<float>(WIDTH) / HEIGHT, 0.1f, 100.0f);
     
-    Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
+  Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
-    Model m("res/models/suzanne.obj");
+  Model m("res/models/suzanne.obj");
 
-    //m.set_rotation_x(glm::radians(-90.0f));
+  //m.set_rotation_x(glm::radians(-90.0f));
 
-    c.translate(-2.5f, 0.0f, 10.0f);
-    //c.rotate_y(glm::radians(45.0f));
+  c.translate(-2.5f, 0.0f, 10.0f);
+  //c.rotate_y(glm::radians(45.0f));
 
-    auto draw_cb = [&]() {
-      ren.draw(m, s, c);
-    };
+  auto draw_cb = [&]() {
+    ren.draw(m, s, c);
+  };
 
-    ren.set_callback(draw_cb);
+  ren.set_callback(draw_cb);
 
-    ren.loop();
-  }
+  ren.loop();
 
   return 0;
 }
