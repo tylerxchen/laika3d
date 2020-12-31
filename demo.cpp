@@ -1,16 +1,17 @@
+#include <glm/glm.hpp>
 #include <iostream>
+
+
 #include "laika3d/renderer.hpp"
 #include "laika3d/vertexbuffer.hpp"
 #include "laika3d/indexbuffer.hpp"
-#include "laika3d/window.hpp"
 #include "laika3d/shader.hpp"
 #include "laika3d/model.hpp"
 
 using namespace laika3d;
 
 int main() {
-  Window win;
-  Renderer ren;
+  Renderer ren(glm::radians(45.0f), 1024, 768, 0.1f, 100.0f);
   
   Shader s("res/shaders/simplevertex.shader", "res/shaders/simplefragment.shader");
 
@@ -20,9 +21,9 @@ int main() {
     ren.draw(m, s);
   };
 
-  win.set_callback(draw_cb);
+  ren.set_callback(draw_cb);
 
-  win.loop();
+  ren.loop();
 
   return 0;
 }

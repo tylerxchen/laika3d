@@ -1,4 +1,4 @@
-add_library(laika3d shader.cpp renderer.cpp vertexbuffer.cpp indexbuffer.cpp window.cpp model.cpp)
+add_library(laika3d shader.cpp renderer.cpp vertexbuffer.cpp indexbuffer.cpp model.cpp camera.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)

@@ -10,7 +10,11 @@ namespace laika3d {
 
       void move(float x, float y, float z);
 
+      glm::mat4 get_view() const { return view; }
+      glm::mat4 get_proj() const { return projection; }
+
     private:
       glm::mat4 projection;
+      glm::mat4 view;
   };
 }

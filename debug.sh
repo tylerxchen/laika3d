@@ -1,1 +1,2 @@
-gdb ./build/laika3d_demo
+#! /bin/sh
+gdb ./out/laika3d_demo

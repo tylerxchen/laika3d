@@ -1,2 +1,2 @@
 #! /bin/sh
-cd build ; ./laika3d_demo
+cd out ; ./laika3d_demo
