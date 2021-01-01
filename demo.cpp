@@ -10,8 +10,8 @@
 using namespace laika3d;
 
 int main(int argc, char* argv[]) {
-  const unsigned int WIDTH = 1024;
-  const unsigned int HEIGHT = 768;
+  const unsigned int WIDTH = 1024*2;
+  const unsigned int HEIGHT = 768*2;
   
   Renderer ren(WIDTH, HEIGHT);
 

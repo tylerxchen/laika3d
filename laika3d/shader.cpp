@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
 #include <vector>
 #include <stdexcept>
 #include <fstream>
@@ -81,6 +83,29 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
   }
 }
 
+template<typename T>
+void Shader::uniform(unsigned int location, const T& val) const {
+  if constexpr (std::is_same<T, float>::value) {
+    glUniform1f(location, val);
+  }
+  else if constexpr (std::is_same<T, glm::vec2>::value) {
+    glUniform2f(location, val[0], val[1]);
+  }
+  else if constexpr (std::is_same<T, glm::vec3>::value) {
+    glUniform3f(location, val[0], val[1], val[2]);
+  }
+  else if constexpr (std::is_same<T, glm::vec4>::value) {
+    glUniform4f(location, val[0], val[1], val[2], val[3]);
+  }
+  else if constexpr (std::is_same<T, glm::mat4>::value) {
+    glUniformMatrix4fv(location, 1, false, &val[0][0]);
+  }
+  else {
+    // the '&& sizeof(T)' is there to stop the compiler from complaining about the assertion
+    static_assert(false && sizeof(T), "Unsupported uniform type");
+  }
+}
+
 void Shader::bind() const {
   glUseProgram(prog_id);
 }
@@ -91,5 +116,4 @@ void Shader::unbind() const {
 
 Shader::~Shader() {
   glDeleteProgram(prog_id);
-  std::cout << glGetError() << std::endl;
 }

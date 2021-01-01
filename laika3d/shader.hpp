@@ -11,6 +11,9 @@ namespace laika3d {
       unsigned int get_prog_id() const { return prog_id; }
       unsigned int get_mvp_id() const { return mvp_uniform; }
 
+      template<typename T>
+      void uniform(unsigned int location, const T& val) const;
+
       void bind() const;
       void unbind() const;
 

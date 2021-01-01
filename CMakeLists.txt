@@ -6,6 +6,6 @@ add_executable(laika3d_demo demo.cpp)
 
 add_subdirectory(laika3d)
 target_link_directories(laika3d_demo PRIVATE laika3d)
-target_include_directories(laika3d_demo PRIVATE laika3d)
+target_include_directories(laika3d_demo PRIVATE laika3d laika3d/vendor)
 
 target_link_libraries(laika3d_demo laika3d)
