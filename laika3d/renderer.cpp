@@ -83,12 +83,30 @@ void Renderer::draw(const Model& m, const Shader& s, const Camera& c) {
   glUniformMatrix4fv(s.get_mvp_id(), 1, GL_FALSE, &mvp[0][0]);
 
   glVertexAttribPointer(
-    0,
+    VERTEX_POSITION,
     3,
     GL_FLOAT,
     GL_FALSE,
     sizeof(Vertex),
     static_cast<void*>(0)
+  );
+
+  glVertexAttribPointer(
+    VERTEX_NORMAL,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    reinterpret_cast<void*>(offsetof(Vertex, norm_x))
+  );
+
+  glVertexAttribPointer(
+    TEXTURE_COORDINATE,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    reinterpret_cast<void*>(offsetof(Vertex, tex_x))
   );
 
   glDrawElements(

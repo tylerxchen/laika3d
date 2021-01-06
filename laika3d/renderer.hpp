@@ -13,6 +13,12 @@
 namespace laika3d {
   void GLAPIENTRY message_callback(GLenum source, GLenum type, GLuint id, GLenum severity,
                                    GLsizei length, const GLchar* message, const void* userParam);
+  
+  enum AttributeIndex : unsigned int {
+    VERTEX_POSITION = 0,
+    TEXTURE_COORDINATE = 1,
+    VERTEX_NORMAL = 2,
+  };
 
   class Renderer {
     public:

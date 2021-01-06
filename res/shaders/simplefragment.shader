@@ -1,5 +1,11 @@
 #version 330 core
+
+in vec3 uv;
+
 out vec3 color;
+
+uniform sampler2D texture_sampler
+
 void main() {
-  color = vec3(0, 1, 0);
+  color = texture(texture_sampler, uv).rgb
 }
