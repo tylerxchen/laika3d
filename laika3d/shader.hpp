@@ -1,15 +1,17 @@
 #pragma once
 
+#include "resource.hpp"
+
 #include <string>
 
 namespace laika3d {
-  class Shader {
+  class Shader : public Resource {
     public:
       Shader(const std::string& vertex_path, const std::string& fragment_path);
       ~Shader();
 
-      unsigned int get_prog_id() const { return prog_id; }
-      unsigned int get_mvp_id() const { return mvp_uniform; }
+      unsigned int get_prog_id() const;
+      unsigned int get_mvp_id() const;
 
       template<typename T>
       void uniform(unsigned int location, const T& val) const;

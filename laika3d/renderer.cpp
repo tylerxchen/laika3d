@@ -39,6 +39,8 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
 
   glEnable(GL_DEBUG_OUTPUT);
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
   glDebugMessageCallback(message_callback, nullptr);
   glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
   glGenVertexArrays(1, &vao_id);
@@ -61,17 +63,6 @@ void Renderer::loop() {
     glfwSwapBuffers(win);
     glfwPollEvents();
   }
-
-  /*
-  glfwSetInputMode(win, GLFW_STICKY_KEYS, GL_TRUE);
-  do {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    callback();
-    glfwSwapBuffers(win);
-    glfwPollEvents();
-  } while (glfwGetKey(win, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-           glfwWindowShouldClose(win) == 0);
-  */
 }
 
 

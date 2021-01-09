@@ -83,6 +83,10 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
   }
 }
 
+Shader::~Shader() {
+  glDeleteProgram(prog_id);
+}
+
 template<typename T>
 void Shader::uniform(unsigned int location, const T& val) const {
   if constexpr (std::is_same<T, float>::value) {
@@ -106,14 +110,18 @@ void Shader::uniform(unsigned int location, const T& val) const {
   }
 }
 
+unsigned int Shader::get_prog_id() const {
+  return prog_id;
+}
+
+unsigned int Shader::get_mvp_id() const {
+  return mvp_uniform;
+}
+
 void Shader::bind() const {
   glUseProgram(prog_id);
 }
 
 void Shader::unbind() const {
   glUseProgram(0);
-}
-
-Shader::~Shader() {
-  glDeleteProgram(prog_id);
 }

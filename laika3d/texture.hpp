@@ -1,10 +1,12 @@
 #pragma once
 
+#include "resource.hpp"
+
 #include <string>
 #include <vector>
 
 namespace laika3d {
-  class Texture {
+  class Texture : public Resource {
     public:
       Texture(const std::string& path);
       ~Texture();
