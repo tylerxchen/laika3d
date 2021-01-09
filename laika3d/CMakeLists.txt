@@ -1,4 +1,4 @@
-add_library(laika3d geometrynode.cpp indexbuffer.cpp mesh.cpp resourcemanager.cpp shader.cpp texture.cpp vertexbuffer.cpp vendor/lodepng.cpp)
+add_library(laika3d geometrynode.cpp indexbuffer.cpp mesh.cpp resourcemanager.cpp shader.cpp texture.cpp vertexbuffer.cpp transformationnode.cpp vendor/lodepng.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
