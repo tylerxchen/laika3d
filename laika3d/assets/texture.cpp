@@ -1,6 +1,6 @@
 #include "texture.hpp"
 
-#include "vendor/lodepng.h"
+#include "../vendor/lodepng.h"
 #include <GL/glew.h>
 
 #include <stdexcept>

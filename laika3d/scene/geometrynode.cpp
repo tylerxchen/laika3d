@@ -2,9 +2,9 @@
 
 using namespace laika3d;
 
-GeometryNode::GeometryNode() { }
+GeometryNode::GeometryNode() {}
 
-GeometryNode::~GeometryNode() { }
+GeometryNode::~GeometryNode() {}
 
 void GeometryNode::bind() const {
   if (mesh) { mesh->bind(); }

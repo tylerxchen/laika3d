@@ -1,9 +1,9 @@
 #pragma once
 
 #include "scenenode.hpp"
-#include "mesh.hpp"
-#include "texture.hpp"
-#include "shader.hpp"
+#include "../assets/mesh.hpp"
+#include "../assets/texture.hpp"
+#include "../assets/shader.hpp"
 
 namespace laika3d {
   class GeometryNode : public SceneNode {
