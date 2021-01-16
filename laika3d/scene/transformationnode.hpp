@@ -9,7 +9,7 @@
 namespace laika3d {
   class TransformationNode : public SceneNode {
     public:
-      TransformationNode();
+      TransformationNode(const std::string& n);
       ~TransformationNode();
 
       glm::mat4 get_model_matrix() const;

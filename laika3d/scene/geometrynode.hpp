@@ -8,7 +8,7 @@
 namespace laika3d {
   class GeometryNode : public SceneNode {
     public:
-      GeometryNode();
+      GeometryNode(const std::string& n);
       ~GeometryNode();
 
       void bind() const;

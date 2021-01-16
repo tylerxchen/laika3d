@@ -2,10 +2,11 @@
 
 using namespace laika3d;
 
-TransformationNode::TransformationNode()
+TransformationNode::TransformationNode(const std::string& n)
   : translation(0.0f, 0.0f, 0.0f),
     scale(1.0f, 1.0f, 1.0f),
-    rotation(1.0f, 0.0f, 0.0f, 0.0f) {}
+    rotation(1.0f, 0.0f, 0.0f, 0.0f),
+    SceneNode(n) {}
 
 TransformationNode::~TransformationNode() {}
 

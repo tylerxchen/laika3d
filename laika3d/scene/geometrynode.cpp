@@ -2,7 +2,8 @@
 
 using namespace laika3d;
 
-GeometryNode::GeometryNode() {}
+GeometryNode::GeometryNode(const std::string& n)
+  : SceneNode(n) {}
 
 GeometryNode::~GeometryNode() {}
 
