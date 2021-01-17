@@ -7,7 +7,7 @@
 namespace laika3d {
   class Shader : public Resource {
     public:
-      Shader(const std::string& vertex_path, const std::string& fragment_path);
+      Shader(const std::string& path);
       ~Shader();
 
       unsigned int get_prog_id() const;

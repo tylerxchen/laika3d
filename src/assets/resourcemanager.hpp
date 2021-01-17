@@ -47,6 +47,8 @@ namespace laika3d {
         return res;
       }
 
+      std::size_t get_resource_count() { return resources.size(); }
+
     private:
       void cleanup();
 

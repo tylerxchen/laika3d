@@ -12,10 +12,51 @@
 
 using namespace laika3d;
 
-Shader::Shader(const std::string& vertex_path, const std::string& fragment_path) {
+Shader::Shader(const std::string& path) {
   vshader_id = glCreateShader(GL_VERTEX_SHADER);
   fshader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
+  enum class ShaderType {
+    NONE,
+    VERTEX,
+    FRAGMENT,
+  } shader_type = ShaderType::NONE;
+
+  std::string vertex_source;
+  std::string fragment_source;
+  std::ifstream file(path, std::ios::in);
+  if (file.is_open()) {
+    std::stringstream vertex_stream;
+    std::stringstream fragment_stream;
+    std::string line;
+    while (std::getline(file, line)) {
+      if (line == "#VERTEX") {
+        shader_type = ShaderType::VERTEX;
+      }
+      else if (line == "#FRAGMENT") {
+        shader_type = ShaderType::FRAGMENT;
+      }
+      else {
+        switch (shader_type) {
+          case ShaderType::VERTEX:
+            vertex_stream << line;
+            break;
+          case ShaderType::FRAGMENT:
+            fragment_stream << line;
+            break;
+          case ShaderType::NONE:
+            break;
+        }
+      }
+    }
+
+    vertex_source = vertex_stream.str();
+    fragment_source = fragment_stream.str();
+  }
+
+  file.close();
+
+  /*
   std::string vertex_source;
   std::ifstream vertex_stream(vertex_path, std::ios::in);
   if (vertex_stream.is_open()) {
@@ -39,6 +80,7 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
   else {
     throw std::runtime_error("Unable to load fragment shader file");
   }
+  */
 
   auto result = GL_FALSE;
   int log_len;

@@ -143,6 +143,8 @@ Mesh::Mesh(const std::string& file_path) {
     }
   }
 
+  file.close();
+
   if (vertex_indices.size() % 3 != 0) {
     throw std::runtime_error("Index buffer size must be a multiple of 3");
   }
