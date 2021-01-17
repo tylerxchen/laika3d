@@ -7,3 +7,5 @@ namespace laika3d {
         virtual ~Resource() = 0;
   };
 }
+
+inline laika3d::Resource::~Resource() {}

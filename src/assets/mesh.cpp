@@ -6,8 +6,9 @@
 using namespace laika3d;
 
 Mesh::Mesh(const std::string& file_path) {
-    // obj file parsing
+  // obj file parsing
   std::ifstream file;
+  file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   file.open(file_path);
 
   std::string line;

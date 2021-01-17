@@ -19,7 +19,33 @@ namespace laika3d {
       ~ResourceManager();
 
       template<typename T>
-      std::optional<std::shared_ptr<T>> load(const std::string& path);
+      std::optional<std::shared_ptr<T>> load(const std::string& path) {
+        std::shared_ptr<T> res;
+
+        if (resources.find(path) != resources.end()) {
+          res = std::dynamic_pointer_cast<T>(resources[path]);
+          
+          // res will be a null pointer if the path does not refer to the resource type requested
+          if (!res) {
+            return {};
+          }
+
+          cleanup();
+        }
+        else {
+          cleanup();
+          try {
+            res = std::make_shared<T>(path);
+          }
+          catch (std::exception e) {
+            return {};
+          }
+
+          resources[path] = std::static_pointer_cast<Resource>(res);
+        }
+
+        return res;
+      }
 
     private:
       void cleanup();
