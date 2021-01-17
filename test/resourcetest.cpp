@@ -1,5 +1,6 @@
 #include "vendor/catch.hpp"
 #include "../src/assets/resourcemanager.hpp"
+#include "../src/renderer/renderer.hpp"
 
 #include <optional>
 
@@ -30,4 +31,12 @@ TEST_CASE("Does not duplicate the same resources", "[resource]") {
   auto foo2 = rm.load<MockResource>("foo");
   REQUIRE(rm.get_resource_count() == 1);
   REQUIRE(foo1->use_count() == 3); // two for these two references, one for the manager itself
+}
+
+TEST_CASE("Can load actual shaders", "[resource]") {
+  using namespace laika3d;
+  Renderer ren(100, 100);
+  ResourceManager rm;
+  auto shader = rm.load<Shader>("shaders/simple.glsl");
+  REQUIRE(shader.has_value());
 }

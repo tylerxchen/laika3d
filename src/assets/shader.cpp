@@ -39,10 +39,10 @@ Shader::Shader(const std::string& path) {
       else {
         switch (shader_type) {
           case ShaderType::VERTEX:
-            vertex_stream << line;
+            vertex_stream << line << '\n';
             break;
           case ShaderType::FRAGMENT:
-            fragment_stream << line;
+            fragment_stream << line << '\n';
             break;
           case ShaderType::NONE:
             break;
@@ -52,35 +52,15 @@ Shader::Shader(const std::string& path) {
 
     vertex_source = vertex_stream.str();
     fragment_source = fragment_stream.str();
-  }
 
-  file.close();
-
-  /*
-  std::string vertex_source;
-  std::ifstream vertex_stream(vertex_path, std::ios::in);
-  if (vertex_stream.is_open()) {
-    std::stringstream ss;
-    ss << vertex_stream.rdbuf();
-    vertex_source = ss.str();
-    vertex_stream.close();
+    file.close();
   }
   else {
-    throw std::runtime_error("Unable to load vertex shader file");
+    throw std::runtime_error("Unable to load shader file");
   }
 
-  std::string fragment_source;
-  std::ifstream fragment_stream(fragment_path, std::ios::in);
-  if (fragment_stream.is_open()) {
-    std::stringstream ss;
-    ss << fragment_stream.rdbuf();
-    fragment_source = ss.str();
-    fragment_stream.close();
-  }
-  else {
-    throw std::runtime_error("Unable to load fragment shader file");
-  }
-  */
+  //std::cout << "Vertex Shader:" << std::endl << vertex_source << std::endl;
+  //std::cout << "Fragment Shader:" << std::endl << fragment_source << std::endl;
 
   auto result = GL_FALSE;
   int log_len;

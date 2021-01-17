@@ -10,7 +10,7 @@
 #include <optional>
 #include <memory>
 #include <map>
-#include <any>
+#include <iostream>
 
 namespace laika3d {
   class ResourceManager {
@@ -37,7 +37,8 @@ namespace laika3d {
           try {
             res = std::make_shared<T>(path);
           }
-          catch (std::exception e) {
+          catch (std::exception& e) {
+            std::cout << e.what() << std::endl;
             return {};
           }
 
