@@ -6,10 +6,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(laika3d)
 
-add_subdirectory(demo)
+add_subdirectory(src)
 
-add_subdirectory(laika3d)
+add_subdirectory(demo)
 
 target_link_libraries(laika3d_demo laika3d)
 
 add_subdirectory(test)
+
+target_link_libraries(laika3d_test laika3d)
