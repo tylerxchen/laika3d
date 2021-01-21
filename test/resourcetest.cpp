@@ -55,7 +55,7 @@ TEST_CASE("Can load actual textures", "[resource]") {
   using namespace laika3d;
   Renderer ren(100, 100);
   ResourceManager rm;
-  auto texture = rm.load<Texture>("res/test.png");
+  auto texture = rm.load<Texture>("res/monet_impression.png");
   REQUIRE(texture.has_value());
 }
 
@@ -63,6 +63,6 @@ TEST_CASE("Can load actual meshes", "[resource]") {
   using namespace laika3d;
   Renderer ren(100, 100);
   ResourceManager rm;
-  auto mesh = rm.load<Mesh>("res/test.obj");
+  auto mesh = rm.load<Mesh>("res/suzanne.obj");
   REQUIRE(mesh.has_value());
 }

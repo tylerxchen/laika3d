@@ -38,7 +38,6 @@ namespace laika3d {
             res = std::make_shared<T>(path);
           }
           catch (std::exception& e) {
-            std::cout << e.what() << std::endl;
             return {};
           }
 
