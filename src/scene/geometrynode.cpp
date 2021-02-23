@@ -1,4 +1,5 @@
 #include "geometrynode.hpp"
+#include <GL/glew.h>
 
 using namespace laika3d;
 
@@ -17,4 +18,8 @@ void GeometryNode::unbind() const {
   if (mesh) { mesh->unbind(); }
   if (texture) { texture->unbind(); }
   if (shader) { shader->unbind(); }
+}
+
+void GeometryNode::set_mvp(const glm::mat4& mvp) {
+  glUniformMatrix4fv(shader->get_mvp_id(), 1, GL_FALSE, &mvp[0][0]);
 }

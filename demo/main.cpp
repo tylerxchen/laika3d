@@ -1,6 +1,15 @@
+#include "../src/renderer/renderer.hpp"
+
 #include <iostream>
 
 int main() {
-  std::cout << "Nothing here right now" << std::endl;
+  using namespace laika3d;
+  Renderer ren(1024, 600);
+
+  ren.loop(
+    []() {
+      // nothing here right now
+    }
+  );
 }
 

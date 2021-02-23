@@ -8,7 +8,7 @@ namespace laika3d {
   class SceneNode {
     public:
       SceneNode(const std::string& n) : name(n) {}
-      ~SceneNode() {}
+      virtual ~SceneNode() {}
 
       void add_child(std::shared_ptr<SceneNode> child) { children.push_back(child); }
       void erase_child(std::vector<std::shared_ptr<SceneNode>>::const_iterator it) { children.erase(it); }

@@ -11,6 +11,7 @@ set(
   renderer/renderer.hpp
   scene/geometrynode.hpp
   scene/scene.hpp
+  scene/camera.hpp
   scene/scenenode.hpp
   scene/transformationnode.hpp
   vendor/lodepng.h
@@ -24,6 +25,7 @@ set(
   renderer/renderer.cpp
   scene/geometrynode.cpp
   scene/scene.cpp
+  scene/camera.cpp
   scene/transformationnode.cpp
   vendor/lodepng.cpp
 )

@@ -4,9 +4,10 @@
 #include "../assets/mesh.hpp"
 #include "../assets/texture.hpp"
 #include "../assets/shader.hpp"
+#include <glm/glm.hpp>
 
 namespace laika3d {
-  class GeometryNode : public SceneNode {
+  struct GeometryNode : public SceneNode {
     public:
       GeometryNode(const std::string& n);
       ~GeometryNode();
@@ -14,11 +15,7 @@ namespace laika3d {
       void bind() const;
       void unbind() const;
 
-      void set_mesh(std::shared_ptr<Mesh> m) { mesh = m; }
-      void set_texture(std::shared_ptr<Texture> t) { texture = t; }
-      void set_shader(std::shared_ptr<Shader> s) { shader = s; }
-
-    private:
+      void set_mvp(const glm::mat4& mvp);
       std::shared_ptr<Mesh> mesh;    
       std::shared_ptr<Texture> texture;
       std::shared_ptr<Shader> shader;

@@ -18,6 +18,14 @@ namespace laika3d {
       void loop(std::function<void()> frame_callback);
 
     private:
+      enum AttributeIndex : unsigned int {
+        VERTEX_POSITION = 0,
+        TEXTURE_COORDINATE = 1,
+        VERTEX_NORMAL = 2,
+      };
+
+      void draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, glm::mat4& state);
+
       GLFWwindow* win;
       std::function<void()> callback;
       unsigned int vao_id;

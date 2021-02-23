@@ -1,4 +1,5 @@
 #include "renderer.hpp"
+#include "../scene/transformationnode.hpp"
 
 #include <stdexcept>
 #include <iostream>
@@ -50,6 +51,75 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
 Renderer::~Renderer() {
   glfwDestroyWindow(win);
   glfwTerminate();
+}
+
+void Renderer::draw(const Scene& scene) {
+  glm::mat4 mat_state(1.0f);
+  draw_impl(scene, scene.root, mat_state);
+}
+
+void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, glm::mat4& state) {
+  if (typeid(*root) == typeid(TransformationNode)) {
+    // apply the transformation
+    auto trans_node = std::dynamic_pointer_cast<TransformationNode>(root);
+    state *= trans_node->get_model_matrix();
+  }
+  else if (typeid(*root) == typeid(GeometryNode)) {
+    // draw the node
+    auto geo_node = std::dynamic_pointer_cast<GeometryNode>(root);
+
+    auto mvp = scene.cam.get_proj() * scene.cam.get_view() * state;
+    glEnableVertexAttribArray(0);
+    geo_node->bind();
+    geo_node->set_mvp(mvp);
+
+    glVertexAttribPointer(
+      VERTEX_POSITION,
+      3,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(Vertex),
+      nullptr
+    );
+    
+    glVertexAttribPointer(
+      VERTEX_NORMAL,
+      3,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(Vertex),
+      reinterpret_cast<void*>(offsetof(Vertex, norm_x))
+    );
+
+    glVertexAttribPointer(
+      TEXTURE_COORDINATE,
+      3,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(Vertex),
+      reinterpret_cast<void*>(offsetof(Vertex, tex_x))
+    );
+
+    glDrawElements(
+      GL_TRIANGLES,
+      geo_node->mesh->v_index_count(),
+      GL_UNSIGNED_INT,
+      nullptr
+    );
+
+    glDisableVertexAttribArray(0);
+  }
+
+  // explore all of the children
+  for (auto it = root->children_begin(); it != root->children_end(); ++it) {
+    draw_impl(scene, *it, state);
+  }
+
+  if (typeid(*root) == typeid(TransformationNode)) {
+    // each transformation node needs to undo itself after all its children have been explored
+    auto trans_node = std::dynamic_pointer_cast<TransformationNode>(root);
+    state *= glm::inverse(trans_node->get_model_matrix());
+  }
 }
 
 void Renderer::loop(std::function<void()> frame_callback) {
