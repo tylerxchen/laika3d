@@ -1,2 +1,2 @@
 #! /bin/sh
-gdb ./out/demo/laika3d_demo
+cd out/demo ; gdb laika3d_demo

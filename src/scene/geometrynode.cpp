@@ -1,5 +1,6 @@
 #include "geometrynode.hpp"
 #include <GL/glew.h>
+#include <iostream>
 
 using namespace laika3d;
 

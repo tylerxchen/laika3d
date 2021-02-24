@@ -3,7 +3,7 @@
 using namespace laika3d;
 
 Camera::Camera()
-  : projection(glm::perspective(glm::radians(45.0f), static_cast<float>(1024) / 768, 0.1f, 100.0f)), translation(1.0f), rotation(1.0f) {
+  : projection(glm::perspective(glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f)), translation(1.0f), rotation(1.0f) {
   calc_view_mat();
 }
 
