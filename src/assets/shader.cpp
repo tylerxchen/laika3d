@@ -103,6 +103,11 @@ Shader::Shader(const std::string& path) {
   if (mvp_uniform == -1) {
     throw std::runtime_error("Shaders must have a mat4 uniform called 'MVP'");
   }
+
+  texture_uniform = glGetUniformLocation(prog_id, "texture_sampler");
+  if (mvp_uniform == -1) {
+    throw std::runtime_error("Shaders must have a sampler2D uniform called 'texture_sampler'");
+  }
 }
 
 Shader::~Shader() {
@@ -142,6 +147,10 @@ unsigned int Shader::get_prog_id() const {
 
 unsigned int Shader::get_mvp_id() const {
   return mvp_uniform;
+}
+
+unsigned int Shader::get_texture_id() const {
+  return texture_uniform;
 }
 
 void Shader::bind() const {
