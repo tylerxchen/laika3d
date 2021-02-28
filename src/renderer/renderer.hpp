@@ -20,8 +20,8 @@ namespace laika3d {
     private:
       enum AttributeIndex : unsigned int {
         VERTEX_POSITION = 0,
-        TEXTURE_COORDINATE = 1,
-        VERTEX_NORMAL = 2,
+        VERTEX_NORMAL = 1,
+        TEXTURE_COORDINATE = 2,
       };
 
       void draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, glm::mat4& state);

@@ -99,13 +99,23 @@ Shader::Shader(const std::string& path) {
   glDeleteShader(vshader_id);
   glDeleteShader(fshader_id);
 
-  mvp_uniform = glGetUniformLocation(prog_id, "mvp");
-  if (mvp_uniform == -1) {
-    throw std::runtime_error("Shaders must have a mat4 uniform called 'MVP'");
+  model_uniform = glGetUniformLocation(prog_id, "model");
+  if (model_uniform == -1) {
+    throw std::runtime_error("Shaders must have a mat4 uniform called 'model'");
+  }
+
+  view_uniform = glGetUniformLocation(prog_id, "view");
+  if (view_uniform == -1) {
+    throw std::runtime_error("Shaders must have a mat4 uniform called 'view'");
+  }
+
+  proj_uniform = glGetUniformLocation(prog_id, "proj");
+  if (proj_uniform == -1) {
+    throw std::runtime_error("Shaders must have a mat4 uniform called 'proj'");
   }
 
   texture_uniform = glGetUniformLocation(prog_id, "texture_sampler");
-  if (mvp_uniform == -1) {
+  if (texture_uniform == -1) {
     throw std::runtime_error("Shaders must have a sampler2D uniform called 'texture_sampler'");
   }
 }
@@ -145,8 +155,15 @@ unsigned int Shader::get_prog_id() const {
   return prog_id;
 }
 
-unsigned int Shader::get_mvp_id() const {
-  return mvp_uniform;
+unsigned int Shader::get_model_mat_id() const {
+  return model_uniform;
+}
+
+unsigned int Shader::get_view_mat_id() const {
+  return view_uniform;
+}
+unsigned int Shader::get_proj_mat_id() const {
+  return proj_uniform;
 }
 
 unsigned int Shader::get_texture_id() const {

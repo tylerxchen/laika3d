@@ -68,11 +68,10 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
     // draw the node
     auto geo_node = std::dynamic_pointer_cast<GeometryNode>(root);
 
-    auto mvp = scene.cam.get_proj() * scene.cam.get_view() * state;
-    glEnableVertexAttribArray(0);
     geo_node->bind();
-    geo_node->set_mvp(mvp);
+    geo_node->set_mvp(state, scene.cam.get_view(), scene.cam.get_proj());
 
+    glEnableVertexAttribArray(VERTEX_POSITION);
     glVertexAttribPointer(
       VERTEX_POSITION,
       3,
@@ -82,6 +81,7 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
       nullptr
     );
     
+    glEnableVertexAttribArray(VERTEX_NORMAL);
     glVertexAttribPointer(
       VERTEX_NORMAL,
       3,
@@ -91,6 +91,7 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
       reinterpret_cast<void*>(offsetof(Vertex, norm_x))
     );
 
+    glEnableVertexAttribArray(TEXTURE_COORDINATE);
     glVertexAttribPointer(
       TEXTURE_COORDINATE,
       3,
@@ -107,7 +108,9 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
       nullptr
     );
 
-    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(VERTEX_POSITION);
+    glDisableVertexAttribArray(VERTEX_NORMAL);
+    glDisableVertexAttribArray(TEXTURE_COORDINATE);
   }
 
   // explore all of the children

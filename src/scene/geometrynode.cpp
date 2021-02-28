@@ -21,6 +21,8 @@ void GeometryNode::unbind() const {
   if (shader) { shader->unbind(); }
 }
 
-void GeometryNode::set_mvp(const glm::mat4& mvp) {
-  glUniformMatrix4fv(shader->get_mvp_id(), 1, GL_FALSE, &mvp[0][0]);
+void GeometryNode::set_mvp(const glm::mat4& model, const glm::mat4& view, const glm::mat4& proj) {
+  glUniformMatrix4fv(shader->get_model_mat_id(), 1, GL_FALSE, &model[0][0]);
+  glUniformMatrix4fv(shader->get_view_mat_id(), 1, GL_FALSE, &view[0][0]);
+  glUniformMatrix4fv(shader->get_proj_mat_id(), 1, GL_FALSE, &proj[0][0]);
 }

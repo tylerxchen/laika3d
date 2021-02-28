@@ -6,25 +6,44 @@ layout(location = 1) in vec3 vertex_normal;
 layout(location = 2) in vec2 texture_coordinate;
 
 out vec2 uv;
+out vec3 frag_normal;
+out vec3 frag_position;
 
-uniform mat4 mvp;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 proj;
 
 void main() {
-  gl_Position = mvp * vec4(vertex_position, 1);
+  gl_Position = proj * view * model * vec4(vertex_position, 1.0);
 
   uv = texture_coordinate;
+  frag_normal = vertex_normal;
+  frag_position = vec3(model * vec4(vertex_position, 1.0));
 }
 
 #FRAGMENT
 #version 330 core
 
 in vec2 uv;
+in vec3 frag_normal;
+in vec3 frag_position;
 
 out vec4 color;
 
 uniform sampler2D texture_sampler;
 
 void main() {
-  color = texture(texture_sampler, uv);
-  //color = vec4(0.0, 0.0, 1.0, 1.0);
+  vec4 albedo = texture(texture_sampler, uv);
+  vec3 norm = normalize(frag_normal);
+
+  float ambient_str = 0.3;
+  vec3 light_color = vec3(1.0, 1.0, 1.0);
+  vec3 light_pos = vec3(0.0, 0.0, 0.0);
+  vec3 light_dir = normalize(light_pos - frag_position);
+  float diff = max(dot(norm, light_dir), 0.0);
+
+  vec3 diffuse = diff * light_color;
+  vec3 ambient = ambient_str * light_color;
+
+  color = (vec4(diffuse, 1.0)) * albedo;
 }
