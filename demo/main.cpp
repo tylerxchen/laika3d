@@ -7,7 +7,7 @@
 int main() {
   using namespace laika3d;
 
-  Renderer ren(1024, 600);
+  Renderer ren(1024 * 2, 600 * 2);
   ResourceManager rm;
   Scene s;
 

@@ -10,7 +10,6 @@
 #include <optional>
 #include <memory>
 #include <map>
-#include <iostream>
 
 namespace laika3d {
   class ResourceManager {

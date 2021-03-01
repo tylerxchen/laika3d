@@ -33,9 +33,10 @@ out vec4 color;
 uniform sampler2D texture_sampler;
 
 void main() {
-  vec4 albedo = texture(texture_sampler, uv);
+  vec4 tex_color = texture(texture_sampler, uv);
   vec3 norm = normalize(frag_normal);
 
+  // there's a hard coded light at (0.0, 0.0, 0.0) for the time being
   float ambient_str = 0.3;
   vec3 light_color = vec3(1.0, 1.0, 1.0);
   vec3 light_pos = vec3(0.0, 0.0, 0.0);
@@ -45,5 +46,5 @@ void main() {
   vec3 diffuse = diff * light_color;
   vec3 ambient = ambient_str * light_color;
 
-  color = (vec4(diffuse, 1.0)) * albedo;
+  color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0)) * tex_color;
 }

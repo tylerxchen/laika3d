@@ -14,7 +14,15 @@ set(
   scene/camera.hpp
   scene/scenenode.hpp
   scene/transformationnode.hpp
-  vendor/lodepng.h
+  vendor/lodepng/lodepng.h
+  vendor/dear_imgui/imconfig.h
+  vendor/dear_imgui/imgui_impl_glfw.h
+  vendor/dear_imgui/imgui_impl_opengl3.h
+  vendor/dear_imgui/imgui_internal.h
+  vendor/dear_imgui/imgui.h
+  vendor/dear_imgui/imstb_rectpack.h
+  vendor/dear_imgui/imstb_textedit.h
+  vendor/dear_imgui/imstb_truetype.h
   # source files
   assets/indexbuffer.cpp
   assets/mesh.cpp
@@ -27,7 +35,13 @@ set(
   scene/scene.cpp
   scene/camera.cpp
   scene/transformationnode.cpp
-  vendor/lodepng.cpp
+  vendor/lodepng/lodepng.cpp
+  vendor/dear_imgui/imgui_demo.cpp
+  vendor/dear_imgui/imgui_draw.cpp
+  vendor/dear_imgui/imgui_impl_glfw.cpp
+  vendor/dear_imgui/imgui_impl_opengl3.cpp
+  vendor/dear_imgui/imgui_widgets.cpp
+  vendor/dear_imgui/imgui.cpp
 )
 
 add_library(laika3d ${SOURCES})
