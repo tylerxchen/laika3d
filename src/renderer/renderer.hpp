@@ -5,6 +5,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../vendor/dear_imgui/imgui.h"
+#include "../vendor/dear_imgui/imgui_impl_glfw.h"
+#include "../vendor/dear_imgui/imgui_impl_opengl3.h"
+
 #include <functional>
 
 namespace laika3d {

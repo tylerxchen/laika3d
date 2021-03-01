@@ -46,9 +46,23 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
   glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
   glGenVertexArrays(1, &vao_id);
   glBindVertexArray(vao_id);
+
+  // dear imgui setup
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+  ImGui::StyleColorsDark();
+
+  ImGui_ImplGlfw_InitForOpenGL(win, true);
+  ImGui_ImplOpenGL3_Init("#version 130");
 }
 
 Renderer::~Renderer() {
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+
   glfwDestroyWindow(win);
   glfwTerminate();
 }

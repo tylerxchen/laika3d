@@ -40,6 +40,7 @@ set(
   vendor/dear_imgui/imgui_draw.cpp
   vendor/dear_imgui/imgui_impl_glfw.cpp
   vendor/dear_imgui/imgui_impl_opengl3.cpp
+  vendor/dear_imgui/imgui_tables.cpp
   vendor/dear_imgui/imgui_widgets.cpp
   vendor/dear_imgui/imgui.cpp
 )
