@@ -1,14 +1,9 @@
 #include "shader.hpp"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-
 #include <vector>
 #include <stdexcept>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 using namespace laika3d;
 
@@ -122,29 +117,6 @@ Shader::Shader(const std::string& path) {
 
 Shader::~Shader() {
   glDeleteProgram(prog_id);
-}
-
-template<typename T>
-void Shader::set_uniform(unsigned int location, const T& val) const {
-  if constexpr (std::is_same<T, float>::value) {
-    glUniform1f(location, val);
-  }
-  else if constexpr (std::is_same<T, glm::vec2>::value) {
-    glUniform2f(location, val[0], val[1]);
-  }
-  else if constexpr (std::is_same<T, glm::vec3>::value) {
-    glUniform3f(location, val[0], val[1], val[2]);
-  }
-  else if constexpr (std::is_same<T, glm::vec4>::value) {
-    glUniform4f(location, val[0], val[1], val[2], val[3]);
-  }
-  else if constexpr (std::is_same<T, glm::mat4>::value) {
-    glUniformMatrix4fv(location, 1, false, &val[0][0]);
-  }
-  else {
-    // the '&& sizeof(T)' is there to stop the compiler from complaining about the assertion
-    static_assert(false && sizeof(T), "Unsupported uniform type");
-  }
 }
 
 unsigned int Shader::get_uniform_location(const std::string& name) const {

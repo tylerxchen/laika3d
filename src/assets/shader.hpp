@@ -2,6 +2,10 @@
 
 #include "resource.hpp"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
 #include <string>
 
 namespace laika3d {
@@ -17,7 +21,27 @@ namespace laika3d {
       unsigned int get_proj_mat_id() const;
 
       template<typename T>
-      void set_uniform(unsigned int location, const T& val) const;
+      void set_uniform(unsigned int location, const T& val) const {
+        if constexpr (std::is_same<T, float>::value) {
+          glUniform1f(location, val);
+        }
+        else if constexpr (std::is_same<T, glm::vec2>::value) {
+          glUniform2f(location, val[0], val[1]);
+        }
+        else if constexpr (std::is_same<T, glm::vec3>::value) {
+          glUniform3f(location, val[0], val[1], val[2]);
+        }
+        else if constexpr (std::is_same<T, glm::vec4>::value) {
+          glUniform4f(location, val[0], val[1], val[2], val[3]);
+        }
+        else if constexpr (std::is_same<T, glm::mat4>::value) {
+          glUniformMatrix4fv(location, 1, false, &val[0][0]);
+        }
+        else {
+          // the '&& sizeof(T)' is there to stop the compiler from complaining about the assertion
+          static_assert(false && sizeof(T), "Unsupported uniform type");
+        }
+      }
 
       unsigned int get_uniform_location(const std::string& name) const;
 

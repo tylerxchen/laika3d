@@ -54,6 +54,8 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
 
   ImGui::StyleColorsDark();
 
+  ImGui::GetIO().FontGlobalScale = 2.0;
+
   ImGui_ImplGlfw_InitForOpenGL(win, true);
   ImGui_ImplOpenGL3_Init("#version 130");
 }
@@ -70,6 +72,10 @@ Renderer::~Renderer() {
 void Renderer::draw(const Scene& scene) {
   glm::mat4 mat_state(1.0f);
   draw_impl(scene, scene.root, mat_state);
+}
+
+void Renderer::set_key_callback(void (*key_callback)(GLFWwindow*, int, int, int, int)) {
+  glfwSetKeyCallback(win, key_callback);
 }
 
 void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, glm::mat4& state) {

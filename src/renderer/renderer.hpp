@@ -19,6 +19,8 @@ namespace laika3d {
 
       void draw(const Scene& scene);
 
+      void set_key_callback(void (*key_callback)(GLFWwindow*, int, int, int, int));
+
       void loop(std::function<void()> frame_callback);
 
     private:

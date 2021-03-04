@@ -22,7 +22,7 @@ void GeometryNode::unbind() const {
 }
 
 void GeometryNode::set_mvp(const glm::mat4& model, const glm::mat4& view, const glm::mat4& proj) {
-  glUniformMatrix4fv(shader->get_model_mat_id(), 1, GL_FALSE, &model[0][0]);
-  glUniformMatrix4fv(shader->get_view_mat_id(), 1, GL_FALSE, &view[0][0]);
-  glUniformMatrix4fv(shader->get_proj_mat_id(), 1, GL_FALSE, &proj[0][0]);
+  shader->set_uniform(shader->get_model_mat_id(), model);
+  shader->set_uniform(shader->get_view_mat_id(), view);
+  shader->set_uniform(shader->get_proj_mat_id(), proj);
 }
