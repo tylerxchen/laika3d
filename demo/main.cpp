@@ -3,6 +3,7 @@
 #include "../src/assets/resourcemanager.hpp"
 
 #include <iostream>
+#include <stack>
 
 static const float MOVE_SPEED = 0.3f;
 
@@ -35,7 +36,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     case GLFW_KEY_LEFT_SHIFT:
     case GLFW_KEY_RIGHT_SHIFT:
       move_vector[1] = (action == GLFW_RELEASE) ? 0.0f : -1.0f;
-    break;
+      break;
     // camera rotation
     case GLFW_KEY_LEFT:
       turn_vector[0] = (action == GLFW_RELEASE) ? 0.0f : 1.0f;
@@ -51,6 +52,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
       break;
   }
 }
+
+
 
 int main() {
   using namespace laika3d;
@@ -103,6 +106,44 @@ int main() {
       ImGui::NewFrame();
 
       ImGui::ShowDemoWindow();
+
+      {
+        ImGui::Begin("Scene Graph");
+        
+        // simple depth first traversal of the scene graph to generate the menu
+        struct SceneFrame {
+          bool opened;
+          std::shared_ptr<SceneNode> node;
+        };
+
+        std::stack<SceneFrame> scene_stack;
+        scene_stack.push({ false, s.root });
+
+        while (!scene_stack.empty()) {
+          auto& curr = scene_stack.top();
+          if (!curr.opened) {
+            if (ImGui::TreeNode(curr.node->get_name().c_str())) {
+              // if the node is open, we should traverse further while also remembering to pop the treenode
+              curr.opened = true;
+              if (curr.node->get_child_count() > 0) {
+                for (auto it = curr.node->children_begin(); it != curr.node->children_end(); ++it) {
+                  scene_stack.push({ false, (*it) });
+                }
+              }
+            }
+            else {
+              // the node doesn't need to stay on the stack if it hasn't been opened, so it can be popped immediately
+              scene_stack.pop();
+            }
+          }
+          else {
+            // cleanup called when returning to an opened node
+            ImGui::TreePop();
+            scene_stack.pop();
+          }
+        }
+        ImGui::End();
+      }
 
       {
         static float f = 0.0f;
