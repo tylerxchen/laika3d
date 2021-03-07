@@ -8,6 +8,8 @@ set(
   assets/shader.hpp
   assets/texture.hpp
   assets/vertexbuffer.hpp
+  assets/material_presets.hpp
+  assets/material.hpp
   renderer/renderer.hpp
   scene/geometrynode.hpp
   scene/scene.hpp

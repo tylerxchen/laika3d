@@ -36,28 +36,34 @@ out vec4 color;
 
 uniform sampler2D texture_sampler;
 
+struct Material {
+  vec3 ambient;
+  vec3 diffuse;
+  vec3 specular;
+  float shininess;
+};
+
+uniform Material material;
+
 void main() {
   vec4 tex_color = texture(texture_sampler, uv);
 
   // ambient
-  float ambient_str = 0.3;
   vec3 light_color = vec3(1.0, 1.0, 1.0);
-  vec3 ambient = ambient_str * light_color;
+  vec3 ambient = material.ambient * light_color;
 
   vec3 light_dir = normalize(light_position - frag_position);
 
   // diffuse
   vec3 norm = normalize(frag_normal);
   float diff = max(dot(norm, light_dir), 0.0);
-  vec3 diffuse = diff * light_color;
+  vec3 diffuse = (diff * material.diffuse) * light_color;
 
   // specular
-  float specular_str = 0.5;
-  int shininess = 32;
   vec3 view_dir = normalize(-frag_position);
   vec3 halfway_dir = normalize(light_dir + view_dir);
-  float spec = pow(max(dot(frag_normal, halfway_dir), 0.0), shininess);
-  vec3 specular = light_color * spec;
+  float spec = pow(max(dot(frag_normal, halfway_dir), 0.0), material.shininess);
+  vec3 specular = light_color * (spec * material.specular);
 
   color = (vec4(ambient, 1.0) + vec4(diffuse, 1.0) + vec4(specular, 1.0)) * tex_color;
 }

@@ -113,6 +113,26 @@ Shader::Shader(const std::string& path) {
   if (texture_uniform == -1) {
     throw std::runtime_error("Shaders must have a sampler2D uniform called 'texture_sampler'");
   }
+
+  ambient_uniform = glGetUniformLocation(prog_id, "material.ambient");
+  if (ambient_uniform == -1) {
+    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'ambient'");
+  }
+
+  diffuse_uniform = glGetUniformLocation(prog_id, "material.diffuse");
+  if (diffuse_uniform == -1) {
+    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'diffuse'");
+  }
+
+  specular_uniform = glGetUniformLocation(prog_id, "material.specular");
+  if (specular_uniform == -1) {
+    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'specular'");
+  }
+
+  shininess_uniform = glGetUniformLocation(prog_id, "material.shininess");
+  if (shininess_uniform == -1) {
+    throw std::runtime_error("Shaders must have a struct called 'material' with a float member called 'shininess'");
+  }
 }
 
 Shader::~Shader() {
@@ -140,6 +160,22 @@ unsigned int Shader::get_proj_mat_id() const {
 
 unsigned int Shader::get_texture_id() const {
   return texture_uniform;
+}
+
+unsigned int Shader::get_ambient_id() const {
+  return ambient_uniform;
+}
+
+unsigned int Shader::get_diffuse_id() const {
+  return diffuse_uniform;
+}
+
+unsigned int Shader::get_specular_id() const {
+  return specular_uniform;
+}
+
+unsigned int Shader::get_shininess_id() const {
+  return shininess_uniform;
 }
 
 void Shader::bind() const {

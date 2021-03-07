@@ -19,6 +19,10 @@ namespace laika3d {
       unsigned int get_model_mat_id() const;
       unsigned int get_view_mat_id() const;
       unsigned int get_proj_mat_id() const;
+      unsigned int get_ambient_id() const;
+      unsigned int get_diffuse_id() const;
+      unsigned int get_specular_id() const;
+      unsigned int get_shininess_id() const;
 
       template<typename T>
       void set_uniform(unsigned int location, const T& val) const {
@@ -49,10 +53,21 @@ namespace laika3d {
       void unbind() const;
 
     private:
+      // mvp uniforms
       unsigned int model_uniform;
       unsigned int view_uniform;
       unsigned int proj_uniform;
+
+      // lighting uniforms
+      unsigned int ambient_uniform;
+      unsigned int diffuse_uniform;
+      unsigned int specular_uniform;
+      unsigned int shininess_uniform;
+
+      // texture uniform
       unsigned int texture_uniform;
+
+      // shader ids
       unsigned int vshader_id;
       unsigned int fshader_id;
       unsigned int prog_id;

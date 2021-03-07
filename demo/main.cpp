@@ -1,6 +1,7 @@
 #include "../src/renderer/renderer.hpp"
 #include "../src/scene/transformationnode.hpp"
 #include "../src/assets/resourcemanager.hpp"
+#include "../src/assets/material_presets.hpp"
 
 #include <iostream>
 #include <stack>
@@ -83,6 +84,7 @@ int main() {
     suzanne_node->mesh = suzanne;
     suzanne_node->texture = tex;
     suzanne_node->shader = shader;
+    suzanne_node->material = std::make_shared<Material>(JADE);
 
     s.add_node("root", suzanne_node);
   }

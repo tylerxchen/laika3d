@@ -4,6 +4,7 @@
 #include "../assets/mesh.hpp"
 #include "../assets/texture.hpp"
 #include "../assets/shader.hpp"
+#include "../assets/material.hpp"
 #include <glm/glm.hpp>
 
 namespace laika3d {
@@ -20,5 +21,9 @@ namespace laika3d {
       std::shared_ptr<Mesh> mesh;    
       std::shared_ptr<Texture> texture;
       std::shared_ptr<Shader> shader;
+      std::shared_ptr<Material> material;
+
+    private:
+      void bind_material() const;
   };
 }
