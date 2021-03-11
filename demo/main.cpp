@@ -63,11 +63,15 @@ int main() {
   ResourceManager rm;
   Scene s;
 
-  std::dynamic_pointer_cast<TransformationNode>(s.find_node("root"))->set_translation(glm::vec3(2.5f, 0.0, -10.0f));
+  //std::dynamic_pointer_cast<TransformationNode>(s.find_node("root"))->set_translation(glm::vec3(2.5f, 0.0, -10.0f));
 
   ren.set_key_callback(key_callback);
 
   {
+    auto suzanne_transformation = std::make_shared<TransformationNode>("suzanne_trans");
+    suzanne_transformation->set_translation(glm::vec3(2.5f, 0.0f, -10.0f));
+    s.add_node("root", suzanne_transformation);
+
     auto tex_opt = rm.load<Texture>("res/textures/single_pixel_gray.png");
     assert(tex_opt.has_value());
     auto tex = *tex_opt;
@@ -80,13 +84,29 @@ int main() {
     assert(shader_opt.has_value());
     auto shader = *shader_opt;
 
-    auto suzanne_node = std::make_shared<GeometryNode>("suzanne");
+    auto suzanne_node = std::make_shared<GeometryNode>("suzanne_model");
     suzanne_node->mesh = suzanne;
     suzanne_node->texture = tex;
     suzanne_node->shader = shader;
     suzanne_node->material = std::make_shared<Material>(JADE);
 
-    s.add_node("root", suzanne_node);
+    s.add_node("suzanne_trans", suzanne_node);
+
+    auto floor_transformation = std::make_shared<TransformationNode>("floor_trans");
+    floor_transformation->set_translation(glm::vec3(0.0f, -2.0f, 0.0f));
+    floor_transformation->set_scale(glm::vec3(20.0f, 1.0f, 20.0f));
+    s.add_node("root", floor_transformation);
+    
+    auto cube_opt = rm.load<Mesh>("res/models/cube.obj");
+    assert(cube_opt.has_value());
+    auto cube = *cube_opt;
+
+    auto cube_node = std::make_shared<GeometryNode>("floor_model");
+    cube_node->mesh = cube;
+    cube_node->texture = tex;
+    cube_node->shader = shader;
+    cube_node->material = std::make_shared<Material>(GOLD);
+    s.add_node("floor_trans", cube_node);
   }
 
   ren.loop(
@@ -107,7 +127,7 @@ int main() {
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
 
-      ImGui::ShowDemoWindow();
+      //ImGui::ShowDemoWindow();
 
       {
         ImGui::Begin("Scene Graph");
