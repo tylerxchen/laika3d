@@ -13,6 +13,7 @@ namespace laika3d {
       Mesh(const std::string& file_path);
       ~Mesh();
 
+      std::size_t vertex_count() const { return vbuf->count(); }
       std::size_t v_index_count() const { return v_indices->count(); }
 
       void bind() const;

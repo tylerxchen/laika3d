@@ -23,6 +23,11 @@ namespace laika3d {
 
       void loop(std::function<void()> frame_callback);
 
+      struct RenderStats {
+        unsigned int vertices;
+        unsigned int indices;
+      } stats;
+
     private:
       enum AttributeIndex : unsigned int {
         VERTEX_POSITION = 0,

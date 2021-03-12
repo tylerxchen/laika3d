@@ -54,7 +54,7 @@ Renderer::Renderer(unsigned int width, unsigned int height) {
 
   ImGui::StyleColorsDark();
 
-  ImGui::GetIO().FontGlobalScale = 2.0;
+  ImGui::GetIO().FontGlobalScale = 2.5;
 
   ImGui_ImplGlfw_InitForOpenGL(win, true);
   ImGui_ImplOpenGL3_Init("#version 130");
@@ -71,6 +71,8 @@ Renderer::~Renderer() {
 
 void Renderer::draw(const Scene& scene) {
   glm::mat4 mat_state(1.0f);
+  stats.vertices = 0;
+  stats.indices = 0;
   draw_impl(scene, scene.root, mat_state);
 }
 
@@ -90,6 +92,9 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
 
     geo_node->bind();
     geo_node->set_mvp(state, scene.cam.get_view(), scene.cam.get_proj());
+
+    stats.vertices += geo_node->mesh->vertex_count();
+    stats.indices += geo_node->mesh->v_index_count();
 
     glEnableVertexAttribArray(VERTEX_POSITION);
     glVertexAttribPointer(

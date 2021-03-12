@@ -107,6 +107,22 @@ int main() {
     cube_node->shader = shader;
     cube_node->material = std::make_shared<Material>(GOLD);
     s.add_node("floor_trans", cube_node);
+
+    auto teapot_transformation = std::make_shared<TransformationNode>("teapot_trans");
+    teapot_transformation->set_translation(glm::vec3(-5.0f, 0.0f, -8.0f));
+    teapot_transformation->rotate_y(glm::radians(180.0f));
+    s.add_node("root", teapot_transformation);
+
+    auto teapot_opt = rm.load<Mesh>("res/models/teapot.obj");
+    assert(teapot_opt.has_value());
+    auto teapot = *teapot_opt;
+
+    auto teapot_node = std::make_shared<GeometryNode>("teapot_model");
+    teapot_node->mesh = teapot;
+    teapot_node->texture = tex;
+    teapot_node->shader = shader;
+    teapot_node->material = std::make_shared<Material>(JADE);
+    s.add_node("teapot_trans", teapot_node);
   }
 
   ren.loop(
@@ -174,6 +190,9 @@ int main() {
         ImGui::Begin("Stats");
 
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::Text("%d vertices, %d indices (%d triangles)", ren.stats.vertices, ren.stats.indices, ren.stats.indices / 3);
+        ImGui::Text("GPU Vendor: %s", glGetString(GL_VENDOR));
+        ImGui::Text("GPU Name: %s", glGetString(GL_RENDERER));
         ImGui::End();
       }
 

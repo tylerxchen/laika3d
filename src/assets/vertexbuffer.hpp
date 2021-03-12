@@ -24,6 +24,8 @@ namespace laika3d {
       void bind() const;
       void unbind() const;
 
+      unsigned int count() const { return vbuf.size(); }
+
     private:
       void init_gl();
 
