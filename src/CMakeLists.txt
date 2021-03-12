@@ -16,6 +16,7 @@ set(
   scene/camera.hpp
   scene/scenenode.hpp
   scene/transformationnode.hpp
+  scene/pointlight.hpp
   vendor/lodepng/lodepng.h
   vendor/dear_imgui/imconfig.h
   vendor/dear_imgui/imgui_impl_glfw.h

@@ -63,7 +63,19 @@ int main() {
   ResourceManager rm;
   Scene s;
 
-  //std::dynamic_pointer_cast<TransformationNode>(s.find_node("root"))->set_translation(glm::vec3(2.5f, 0.0, -10.0f));
+  s.skybox = std::make_shared<GeometryNode>("skybox");
+  auto skybox_opt = rm.load<Mesh>("res/models/skybox.obj");
+  assert(skybox_opt.has_value());
+
+  auto skybox_shader_opt = rm.load<Shader>("res/shaders/skybox.glsl");
+  assert(skybox_shader_opt.has_value());
+
+  auto skybox_texture_opt = rm.load<Texture>("res/textures/skybox.png");
+  assert(skybox_texture_opt.has_value());
+
+  s.skybox->mesh = *skybox_opt;
+  s.skybox->shader = *skybox_shader_opt;
+  s.skybox->texture = *skybox_texture_opt;
 
   ren.set_key_callback(key_callback);
 

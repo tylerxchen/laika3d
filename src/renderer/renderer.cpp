@@ -73,6 +73,29 @@ void Renderer::draw(const Scene& scene) {
   glm::mat4 mat_state(1.0f);
   stats.vertices = 0;
   stats.indices = 0;
+
+  // draw the skybox before going into the scene
+  if (scene.skybox) {
+    auto model_mat = scene.cam.get_translation();
+    scene.skybox->bind();
+    scene.skybox->set_mvp(model_mat, scene.cam.get_view(), scene.cam.get_proj());
+
+    setup_buffers();
+
+    glDisable(GL_DEPTH_TEST);
+    glDrawElements(
+      GL_TRIANGLES,
+      scene.skybox->mesh->v_index_count(),
+      GL_UNSIGNED_INT,
+      nullptr
+    );
+    glEnable(GL_DEPTH_TEST);
+
+    //glDisableVertexAttribArray(VERTEX_POSITION);
+    //glDisableVertexAttribArray(VERTEX_NORMAL);
+    //glDisableVertexAttribArray(TEXTURE_COORDINATE);
+  }
+
   draw_impl(scene, scene.root, mat_state);
 }
 
@@ -96,35 +119,7 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
     stats.vertices += geo_node->mesh->vertex_count();
     stats.indices += geo_node->mesh->v_index_count();
 
-    glEnableVertexAttribArray(VERTEX_POSITION);
-    glVertexAttribPointer(
-      VERTEX_POSITION,
-      3,
-      GL_FLOAT,
-      GL_FALSE,
-      sizeof(Vertex),
-      nullptr
-    );
-    
-    glEnableVertexAttribArray(VERTEX_NORMAL);
-    glVertexAttribPointer(
-      VERTEX_NORMAL,
-      3,
-      GL_FLOAT,
-      GL_FALSE,
-      sizeof(Vertex),
-      reinterpret_cast<void*>(offsetof(Vertex, norm_x))
-    );
-
-    glEnableVertexAttribArray(TEXTURE_COORDINATE);
-    glVertexAttribPointer(
-      TEXTURE_COORDINATE,
-      3,
-      GL_FLOAT,
-      GL_FALSE,
-      sizeof(Vertex),
-      reinterpret_cast<void*>(offsetof(Vertex, tex_x))
-    );
+    setup_buffers();
 
     glDrawElements(
       GL_TRIANGLES,
@@ -133,9 +128,9 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
       nullptr
     );
 
-    glDisableVertexAttribArray(VERTEX_POSITION);
-    glDisableVertexAttribArray(VERTEX_NORMAL);
-    glDisableVertexAttribArray(TEXTURE_COORDINATE);
+    //glDisableVertexAttribArray(VERTEX_POSITION);
+    //glDisableVertexAttribArray(VERTEX_NORMAL);
+    //glDisableVertexAttribArray(TEXTURE_COORDINATE);
   }
 
   // explore all of the children
@@ -148,6 +143,38 @@ void Renderer::draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, gl
     auto trans_node = std::dynamic_pointer_cast<TransformationNode>(root);
     state *= glm::inverse(trans_node->get_model_matrix());
   }
+}
+
+void Renderer::setup_buffers() {
+  glEnableVertexAttribArray(VERTEX_POSITION);
+  glVertexAttribPointer(
+    VERTEX_POSITION,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    nullptr
+  );
+  
+  glEnableVertexAttribArray(VERTEX_NORMAL);
+  glVertexAttribPointer(
+    VERTEX_NORMAL,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    reinterpret_cast<void*>(offsetof(Vertex, norm_x))
+  );
+
+  glEnableVertexAttribArray(TEXTURE_COORDINATE);
+  glVertexAttribPointer(
+    TEXTURE_COORDINATE,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    reinterpret_cast<void*>(offsetof(Vertex, tex_x))
+  );
 }
 
 void Renderer::loop(std::function<void()> frame_callback) {

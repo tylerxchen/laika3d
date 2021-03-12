@@ -15,6 +15,8 @@ namespace laika3d {
       ~Scene();
 
       std::shared_ptr<SceneNode> root;
+      std::shared_ptr<GeometryNode> skybox;
+      
       Camera cam;
 
       void add_node(const std::string& parent_name, std::shared_ptr<SceneNode> child);

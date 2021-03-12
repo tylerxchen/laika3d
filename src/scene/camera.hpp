@@ -20,12 +20,14 @@ namespace laika3d {
       glm::mat4 get_view() const { return view; }
       glm::mat4 get_proj() const { return projection; }
 
+      glm::mat4 get_translation() const { return translation; }      
+
     private:
       void calc_view_mat();
-      glm::mat4 translation;
       glm::mat4 rotation;
 
       glm::mat4 projection;
+      glm::mat4 translation;
       glm::mat4 view;
   };
 }

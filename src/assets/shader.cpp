@@ -115,24 +115,24 @@ Shader::Shader(const std::string& path) {
   }
 
   ambient_uniform = glGetUniformLocation(prog_id, "material.ambient");
-  if (ambient_uniform == -1) {
-    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'ambient'");
-  }
+  //if (ambient_uniform == -1) {
+  //  throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'ambient'");
+  //}
 
   diffuse_uniform = glGetUniformLocation(prog_id, "material.diffuse");
-  if (diffuse_uniform == -1) {
-    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'diffuse'");
-  }
+  //if (diffuse_uniform == -1) {
+  //  throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'diffuse'");
+  //}
 
   specular_uniform = glGetUniformLocation(prog_id, "material.specular");
-  if (specular_uniform == -1) {
-    throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'specular'");
-  }
+  //if (specular_uniform == -1) {
+  //  throw std::runtime_error("Shaders must have a struct called 'material' with a vec3 member called 'specular'");
+  //}
 
   shininess_uniform = glGetUniformLocation(prog_id, "material.shininess");
-  if (shininess_uniform == -1) {
-    throw std::runtime_error("Shaders must have a struct called 'material' with a float member called 'shininess'");
-  }
+  //if (shininess_uniform == -1) {
+  //  throw std::runtime_error("Shaders must have a struct called 'material' with a float member called 'shininess'");
+  //}
 }
 
 Shader::~Shader() {

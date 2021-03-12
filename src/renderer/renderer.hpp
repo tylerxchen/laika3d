@@ -36,6 +36,7 @@ namespace laika3d {
       };
 
       void draw_impl(const Scene& scene, std::shared_ptr<SceneNode> root, glm::mat4& state);
+      void setup_buffers();
 
       GLFWwindow* win;
       std::function<void()> callback;

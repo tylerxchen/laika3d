@@ -45,7 +45,7 @@ Mesh::Mesh(const std::string& file_path) {
       }
       else if (start == "vt") {
         float t1, t2, t3;
-        ss >> t1; ss >> t3; ss >> t3;
+        ss >> t1; ss >> t2; ss >> t3;
 
         tex_vals.push_back({ t1, t2, t3 });
       }
@@ -71,7 +71,9 @@ Mesh::Mesh(const std::string& file_path) {
             --v.vn;
           }
           else if (std::sscanf(element.c_str(), "%d/%d", &v.v, &v.vt) == 2) {
+            --v.v;
             v.vn = 0;
+            --v.vt;
           }
           else if (std::sscanf(element.c_str(), "%d", &v.v) == 1) {
             --v.v;
