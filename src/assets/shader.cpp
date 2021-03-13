@@ -8,54 +8,51 @@
 using namespace laika3d;
 
 Shader::Shader(const std::string& path) {
-  vshader_id = glCreateShader(GL_VERTEX_SHADER);
-  fshader_id = glCreateShader(GL_FRAGMENT_SHADER);
-
-  enum class ShaderType {
-    NONE,
-    VERTEX,
-    FRAGMENT,
-  } shader_type = ShaderType::NONE;
-
-  std::string vertex_source;
-  std::string fragment_source;
-  std::ifstream file(path, std::ios::in);
-  if (file.is_open()) {
-    std::stringstream vertex_stream;
-    std::stringstream fragment_stream;
-    std::string line;
-    while (std::getline(file, line)) {
-      if (line == "#VERTEX") {
-        shader_type = ShaderType::VERTEX;
-      }
-      else if (line == "#FRAGMENT") {
-        shader_type = ShaderType::FRAGMENT;
-      }
-      else {
-        switch (shader_type) {
-          case ShaderType::VERTEX:
-            vertex_stream << line << '\n';
-            break;
-          case ShaderType::FRAGMENT:
-            fragment_stream << line << '\n';
-            break;
-          case ShaderType::NONE:
-            break;
-        }
-      }
-    }
-
-    vertex_source = vertex_stream.str();
-    fragment_source = fragment_stream.str();
-
-    file.close();
+  auto file = std::make_shared<std::ifstream>(path, std::ios::in);
+  if (file->is_open()) {
+    compile_shader(file);
+    file->close();
   }
   else {
     throw std::runtime_error("Unable to load shader file");
   }
+}
 
-  //std::cout << "Vertex Shader:" << std::endl << vertex_source << std::endl;
-  //std::cout << "Fragment Shader:" << std::endl << fragment_source << std::endl;
+Shader::Shader(const char* str) {
+  auto stream = std::make_shared<std::istream>(str);
+  compile_shader(stream);
+}
+
+void Shader::compile_shader(std::shared_ptr<std::istream> shader_stream) {
+  vshader_id = glCreateShader(GL_VERTEX_SHADER);
+  fshader_id = glCreateShader(GL_FRAGMENT_SHADER);
+
+  std::stringstream vertex_stream;
+  std::stringstream fragment_stream;
+  std::string line;
+  while (std::getline(*shader_stream, line)) {
+    if (line == "#VERTEX") {
+      shader_type = ShaderType::VERTEX;
+    }
+    else if (line == "#FRAGMENT") {
+      shader_type = ShaderType::FRAGMENT;
+    }
+    else {
+      switch (shader_type) {
+        case ShaderType::VERTEX:
+          vertex_stream << line << '\n';
+          break;
+        case ShaderType::FRAGMENT:
+          fragment_stream << line << '\n';
+          break;
+        case ShaderType::NONE:
+          break;
+      }
+    }
+  }
+
+  std::string vertex_source = vertex_stream.str();
+  std::string fragment_source = fragment_stream.str();
 
   auto result = GL_FALSE;
   int log_len;

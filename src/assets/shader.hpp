@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <memory>
 
 #include <string>
 
@@ -12,6 +13,7 @@ namespace laika3d {
   class Shader : public Resource {
     public:
       Shader(const std::string& path);
+      Shader(const char* str);
       ~Shader();
 
       unsigned int get_prog_id() const;
@@ -53,6 +55,14 @@ namespace laika3d {
       void unbind() const;
 
     private:
+      void compile_shader(std::shared_ptr<std::istream> ss);
+
+      enum class ShaderType {
+        NONE,
+        VERTEX,
+        FRAGMENT,
+      } shader_type = ShaderType::NONE;
+
       // mvp uniforms
       unsigned int model_uniform;
       unsigned int view_uniform;

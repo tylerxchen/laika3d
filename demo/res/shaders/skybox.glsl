@@ -35,6 +35,5 @@ struct Material {
 uniform Material material;
 
 void main() {
-  material;
   color = texture(texture_sampler, uv);
 }
